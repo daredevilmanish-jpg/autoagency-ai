@@ -4,7 +4,6 @@ export async function POST(req:Request){
  try {
   const {role,context}=await req.json();
   if(!['sales','builder','qa'].includes(role)||typeof context!=='string'||context.length>15000)return NextResponse.json({error:'Invalid request'},{status:400});
-  if(!process.env.AI_GATEWAY_API_KEY)return NextResponse.json({error:'AI Gateway is not configured. Set AI_GATEWAY_API_KEY in Vercel environment variables.'},{status:503});
   const instructions:Record<string,string>={
    sales:'You are an ethical B2B sales assistant for a small Indian web design agency. Create a concise prospect assessment, an individually tailored outreach DRAFT, three discovery questions, and a suggested next step. Do not invent verified facts, contact details, consent, or prior interactions. Never claim a message was sent. Clearly distinguish assumptions.',
    builder:'You are a website delivery project manager. Convert the client requirements into a concrete implementation brief with pages, sections, functionality, visual direction, acceptance criteria, milestones, and open questions. Do not claim to have built or deployed a website.',
