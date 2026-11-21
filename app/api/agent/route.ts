@@ -51,13 +51,17 @@ export async function POST(req: Request) {
     );
 
     if (!response.ok) {
+      // Log only the HTTP status; provider error bodies can contain sensitive details.
+      console.error('Gemini API request failed', { status: response.status });
+      const messages: Record<number, string> = {
+        400: 'Gemini rejected the request (400). Check the selected model and request format.',
+        401: 'Gemini authentication failed (401). Check the API key in Vercel.',
+        403: 'Gemini access denied (403). Check API key restrictions and Gemini API access in Google AI Studio.',
+        404: 'Gemini model not found (404). Check GEMINI_MODEL and whether the model is available to your API key.',
+        429: 'Gemini quota or rate limit reached (429). Check Google AI Studio usage limits.',
+      };
       return NextResponse.json(
-        {
-          error:
-            response.status === 429
-              ? 'Gemini rate limit reached. Please try again later.'
-              : 'Gemini could not generate a response. Check your API key, model access, and quota.',
-        },
+        { error: messages[response.status] || `Gemini API returned HTTP ${response.status}. Check Google AI Studio for API availability and project access.` },
         { status: response.status === 429 ? 429 : 502 },
       );
     }
