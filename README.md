@@ -6,7 +6,7 @@ A Next.js application with a human-approved Sales Agent, Website Builder plannin
 
 1. Create a Gemini API key at https://aistudio.google.com/api-keys. Do not commit it to GitHub or paste it in a chat.
 2. In Vercel, open this project's **Settings > Environment Variables**. Add `GEMINI_API_KEY` with your key as its value, scoped to Production (and Preview if you plan to test preview deployments). Save as a sensitive variable if the UI offers that option.
-3. Optional: set `GEMINI_MODEL` to a supported Gemini model ID. The default is `gemini-2.5-flash`.
+3. Optional: set `GEMINI_MODEL` to a supported Gemini model ID. The default is `gemini-3.5-flash-lite`.
 4. Redeploy after adding or changing environment variables.
 5. For local development, run `npm install`, create a local `.env.local` file containing `GEMINI_API_KEY=...`, then run `npm run dev` and visit http://localhost:3000.
 
